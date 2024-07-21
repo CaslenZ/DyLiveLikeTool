@@ -1,5 +1,22 @@
 # DyLiveLikeTool  
 
+<p align="center" class="shields">
+  <a href="https://github.com/CaslenZ/DyLiveLikeTool/issues" style="text-decoration:none">
+    <img src="https://img.shields.io/github/issues/CaslenZ/DyLiveLikeTool.svg" alt="GitHub issues"/>
+  </a>
+  <a href="https://github.com/CaslenZ/DyLiveLikeTool/stargazers" style="text-decoration:none">
+    <img src="https://img.shields.io/github/stars/CaslenZ/DyLiveLikeTool.svg" alt="GitHub stars"/>
+  </a>
+  <a href="https://github.com/CaslenZ/DyLiveLikeTool/network" style="text-decoration:none">
+    <img src="https://img.shields.io/github/forks/CaslenZ/DyLiveLikeTool.svg" alt="GitHub forks"/>
+  </a>
+  </a>
+  <a href="https://github.com/CaslenZ/DyLiveLikeTool/blob/master/LICENSE" style="text-decoration:none">
+    <img src="https://img.shields.io/github/license/CaslenZ/DyLiveLikeTool" alt="GitHub License"/>
+  </a>
+</p>
+
+
 ### 目录：[程序界面](#AppPage)、[依赖库](#DependentLibrary)、[使用方法](#Usage)、[注意事项](#Precautions)、[报错代码查询](#ErrorCodeQuery)、[免责声明](#Disclaimer)、[更新说明](#UpdateInstructions)、[许可证](#Licence)、[联系开发者](#ContactDeveloper)
 
 ---
