@@ -1,5 +1,7 @@
 # DyLiveLikeTool  
 
+## 请注意：DyLiveLikeTool V1.0.0 版本目前出现 “一直点赞” 功能无法执行，正在排查并解决问题。2024年7月23日。  
+
 <p align="center" class="shields">
   <a href="https://github.com/CaslenZ/DyLiveLikeTool/issues" style="text-decoration:none">
     <img src="https://img.shields.io/github/issues/CaslenZ/DyLiveLikeTool.svg" alt="GitHub issues"/>
