@@ -39,11 +39,6 @@ class DyLiveLikeTool:
         self.like_count_entry.pack(side=tk.LEFT)
         self.like_count_frame.pack()
 
-        # 一直点赞选项
-        self.continuous_like_var = tk.BooleanVar()
-        self.continuous_like_checkbox = tk.Checkbutton(self.root, text="一直点赞", variable=self.continuous_like_var, command=self.toggle_like_count_entry_state)
-        self.continuous_like_checkbox.pack()
-
         # 保存配置、跳转、点赞、导出配置、载入配置按钮在同一行
         self.button_frame = tk.Frame(self.root)
         self.save_config_button = tk.Button(self.button_frame, text="保存配置", command=self.save_config)
@@ -71,30 +66,23 @@ class DyLiveLikeTool:
 
         self.previous_mouse_position = None  # 用于记录上一次的鼠标位置
 
-    def toggle_like_count_entry_state(self):
-        if self.continuous_like_var.get():
-            self.like_count_entry.config(state='disabled')
-        else:
-            self.like_count_entry.config(state='normal')
-
     def save_config(self):
         link = self.link_entry.get()
-        if not (link.startswith("https://live.douyin.com/") or link.startswith("live.douyin.com")):
-            self.status_text.set("401 错误")
+        if not (link.startswith("https://live.douyin.com") or link.startswith("live.douyin.com") or link.startswith("HTTPS://LIVE.DOUYIN.COM") or link.startswith("LIVE.DOUYIN.COM")):
+            self.status_text.set("直播间链接格式不准确。")
             return
         try:
             count = int(self.like_count_entry.get())
             if count < 10 or count > 3000:
-                self.status_text.set("402 错误")
+                self.status_text.set("点赞数量应在 10~3000 之间。")
                 return
         except ValueError:
-            self.status_text.set("403 错误")
+            self.status_text.set("点赞数量应该是整数。")
             return
         self.status_text.set(f'''保存配置成功
         链接 - {link}
         点赞方式 - {self.like_method_var.get()}
-        点赞数量 - {count}
-        一直点赞 - {self.continuous_like_var.get()}''')
+        点赞数量 - {count}''')
 
     def jump(self):
         link = self.link_entry.get()
@@ -105,6 +93,9 @@ class DyLiveLikeTool:
             self.status_text.set("网页加载失败")
 
     def start_like(self):
+        if not self.check_saved_config():  # 检查是否保存了配置
+            messagebox.showwarning("提示", "请先保存配置！")
+            return
         self.link_entry.config(state='disabled')
         self.like_count_entry.config(state='disabled')
         self.like()
@@ -155,11 +146,20 @@ class DyLiveLikeTool:
         self.link_entry.config(state='normal')
         self.like_count_entry.config(state='normal')
 
+    def check_saved_config(self):
+        link = self.link_entry.get()
+        if not link:
+            return False
+        try:
+            int(self.like_count_entry.get())
+        except ValueError:
+            return False
+        return True
+
     def export_config(self):
         link = self.link_entry.get()
         method = self.like_method_var.get()
         count = self.like_count_entry.get()
-        still_like = self.continuous_like_var.get()
 
         live_name = tk.simpledialog.askstring("直播间名字", "请输入直播间名字:")
         if not live_name:
@@ -173,7 +173,7 @@ class DyLiveLikeTool:
 
         file_name = f"Config/{live_name}-{current_time}.czad"
         with open(file_name, 'w') as f:
-            f.write(f"Link\n{link}\nMethod\n{method}\nCount\n{count}\nStillLike\n{still_like}")
+            f.write(f"Link\n{link}\nMethod\n{method}\nCount\n{count}")
         self.status_text.set("保存成功")
 
     def load_config(self):
@@ -187,14 +187,12 @@ class DyLiveLikeTool:
             link = lines[1].strip()
             method = lines[3].strip()
             count = lines[5].strip()
-            still_like = lines[7].strip()
 
         self.link_entry.delete(0, tk.END)
         self.link_entry.insert(0, link)
         self.like_method_var.set(method)
         self.like_count_entry.delete(0, tk.END)
         self.like_count_entry.insert(0, count)
-        self.continuous_like_var.set(still_like == 'True')
 
         self.status_text.set("载入成功")
 
